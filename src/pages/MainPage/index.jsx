@@ -60,7 +60,7 @@ const MainPage = () => {
       }
     })
     setRenderedPhotos(sortedPhotos)
-    console.log(sortedPhotos)
+  
   },[photos, sort])
 
   useEffect(() => {
@@ -72,18 +72,18 @@ const MainPage = () => {
     setPage(page + 1);
   };
 
-  const onLikeClick = (photoId) => {
-    dispatch(toggleLike(authorizedUser.id, photoId));
+  const onLikeClick = (_id) => {
+    dispatch(toggleLike(authorizedUser._id, _id));
   };
 
-  const onCommentSendClick = (photoId, comment) => {
-    dispatch(sendComment(authorizedUser.nickname, photoId, comment));
+  const onCommentSendClick = (_id, comment) => {
+    dispatch(sendComment(authorizedUser.name, _id, comment));
   };
   return (
     <Layout
-      userName={authorizedUser.nickname}
-      id={authorizedUser.id}
-      avatarUrl={authorizedUser.avatarUrl}
+      userName={authorizedUser.name}
+      id={authorizedUser._id}
+      avatarUrl={authorizedUser.avatar}
     >
       <div className="cnMainPageRoot">
         <button onClick={onUpClick}>up</button><button onClick={onDownClick}>down</button>
@@ -100,16 +100,16 @@ const MainPage = () => {
             }
             endMessage={<p className="cnMainPageLoaderContainer">Thats All!</p>}
           >
-            {renderedPhotos.map(({ author, imgUrl, id, likes, comments }) => (
+            {renderedPhotos.map(({ author, image, _id, likes, comments }) => (
               <DetailedCard
-                key={id}
-                id={id}
-                userName={author.nickname}
+                key={_id}
+                id={_id}
+                userName={author.name}
                 avatarUrl={author.avatarUrl}
-                userId={author.id}
-                imgUrl={imgUrl}
+                userId={author._id}
+                imgUrl={image}
                 likes={likes.length}
-                isLikedByYou={likes.includes(authorizedUser.id)}
+                isLikedByYou={likes.includes(authorizedUser._id)}
                 comments={comments}
                 className="cnMainPageCard"
                 onLikeClick={onLikeClick}

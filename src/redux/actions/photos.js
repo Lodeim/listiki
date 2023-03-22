@@ -39,17 +39,20 @@ export const getPhotos = (page = 1) => {
 export const toggleLike = (userId, photoId) => {
   return async (dispatch, getState) => {
     const state = getState();
-
+    let method = ""
     const newPhoto = getPhotoFromState(state.photos.photos, photoId);
     if (newPhoto.likes.includes(userId)) {
       newPhoto.likes = newPhoto.likes.filter((like) => like !== userId);
+      method = "DELETE"
     } else {
       newPhoto.likes.push(userId);
+      method = "PUT"
     }
     try {
       const response = await api.photos.mutatePhoto({
+        method: method,
         data: newPhoto,
-        url: `/${photoId}`,
+        url: `/likes/${photoId}`,
       });
       const newPhotos = getUpdatedPhotoForState(
         state.photos.photos,
@@ -71,8 +74,9 @@ export const sendComment = (nickname, photoId, text) => {
     newPhoto.comments.push({ nickname, text });
     try {
       const response = await api.photos.mutatePhoto({
-        data: newPhoto,
-        url: `/${photoId}`,
+        method: "POST",
+        data: {"text": text},
+        url: `/comments/${photoId}`,
       });
 
       const newPhotos = getUpdatedPhotoForState(

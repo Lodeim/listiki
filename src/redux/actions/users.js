@@ -26,7 +26,7 @@ export const getAuthorizedUser = () => {
   return async (dispatch) => {
     try {
       dispatch(getAuthorizedUserStarted());
-      const response = await api.users.getUser(1);
+      const response = await api.users.getUser();
       dispatch(getAuthorizedUserSucces(response.data));
     } catch (error) {
       dispatch(getAuthorizedUserFailed(error));

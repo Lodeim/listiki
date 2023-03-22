@@ -26,6 +26,7 @@ const DetailedCard = ({
   const [isCommentsShown, setIsCommentsShown] = useState(false);
   const [comment, setComment] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleSendCommentClick = () => {
     if (comment) {
       onCommentSendClick(id, comment);
@@ -53,7 +54,7 @@ const DetailedCard = ({
     }
     return comments.map((comment) => <Comment {...comment} key={nanoid()} />);
   };
-
+console.log(comments)
   const onCloseModal = () => {
     setIsModalVisible(false);
     setComment("");
